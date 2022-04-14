@@ -1,16 +1,15 @@
-package project.app;
+package project.app.menu;
 
-
-import project.app.dao.ListMethods;
+import project.app.ListRepositoryCollectionImpl;
 import project.app.model.ListModel;
 
-import java.util.Scanner;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
-    ListMethods listMethods = new ListMethods();
+    ListRepositoryCollectionImpl listRepositoryCollection = new ListRepositoryCollectionImpl();
 
     public int getUserChoice() {
         return scanner.nextInt();
@@ -19,7 +18,7 @@ public class Menu {
     public void viewMenu() {
         boolean active = true;
         while (active) {
-            System.out.printf("\n1.Вывести список\n2.Добавить задачу \n3.Удалить задачу\n4.Выбрать задачу для редактирования\n5.Выход");
+            System.out.printf("\n1.Вывести список\n2.Добавить задачу \n3.Удалить задачу\n4.Выбрать задачу для редактирования\n5.Статус задачи\n6.Выход");
             switch (getUserChoice()) {
                 case 1:
                     viveLists();
@@ -34,10 +33,12 @@ public class Menu {
                     chooseList();
                     break;
                 case 5:
-                    active = false;
+                    listStatus();
+                    break;
+                case 6: active = false;
                     break;
                 default:
-                    System.out.println("Chose another variant");
+                    System.out.println("Выберите другой вариант!");
             }
         }
 
@@ -46,21 +47,23 @@ public class Menu {
 
     public ListModel fillListData() {
         ListModel listModel = new ListModel();
+        System.out.println("Введите номер задачи:");
         listModel.setId(scanner.nextInt());
         scanner.nextLine();
         System.out.println("Введите Наименование задачи:");
         listModel.setName(scanner.nextLine());
+        System.out.println("Нажмите пробел для того чтоб продолжить");
         scanner.nextLine();
         System.out.println("Введите задачу:");
         listModel.setTask(scanner.nextLine());
 
-        listMethods.save(listModel);
+        listRepositoryCollection.save(listModel);
         return listModel;
 
     }
 
     public void viveLists() {
-        List<ListModel> listModel = listMethods.getAll();
+        List<ListModel> listModel = listRepositoryCollection.getAll();
         for (ListModel list : listModel) {
             System.out.println(list);
         }
@@ -69,15 +72,18 @@ public class Menu {
     }
 
     public void deleteList() {
-        listMethods.deleteById();
+        listRepositoryCollection.deleteByID();
     }
 
     public void chooseList() {
         viveLists();
-        System.out.println("Введите название задачи которую хотите отредактировать:");
-        listMethods.getByName();
-
+        listRepositoryCollection.getByName();
 
     }
+    public void listStatus(){
+        viveLists();
+        listRepositoryCollection.listSE();
+    }
+
 
 }

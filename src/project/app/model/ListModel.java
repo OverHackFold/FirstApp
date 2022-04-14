@@ -1,15 +1,26 @@
 package project.app.model;
 
+import java.util.Objects;
+
 public class ListModel {
-    private int id;
+
+    private Integer id;
     private String name;
     private String task;
+    private String status;
+
 
 
     public ListModel() {
 
     }
+    public String getStatus() {
+        return status;
+    }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
     public int getId() {
         return id;
     }
@@ -36,12 +47,24 @@ public class ListModel {
 
     @Override
     public String toString() {
-        return "ListOfTasks{" +
+        return "ListModel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", task='" + task + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ListModel)) return false;
+        ListModel listModel = (ListModel) o;
+        return Objects.equals(getId(), listModel.getId()) && Objects.equals(getName(), listModel.getName()) && Objects.equals(getTask(), listModel.getTask()) && Objects.equals(getStatus(), listModel.getStatus());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getTask(), getStatus());
+    }
 }
