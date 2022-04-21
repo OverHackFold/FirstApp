@@ -2,7 +2,7 @@ package project.app.model;
 
 import java.util.Objects;
 
-public class ListModel {
+public class Task {
 
     private Integer id;
     private String name;
@@ -11,7 +11,7 @@ public class ListModel {
 
 
 
-    public ListModel() {
+    public Task() {
 
     }
     public String getStatus() {
@@ -58,9 +58,9 @@ public class ListModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ListModel)) return false;
-        ListModel listModel = (ListModel) o;
-        return Objects.equals(getId(), listModel.getId()) && Objects.equals(getName(), listModel.getName()) && Objects.equals(getTask(), listModel.getTask()) && Objects.equals(getStatus(), listModel.getStatus());
+        if (!(o instanceof Task)) return false;
+        Task task = (Task) o;
+        return Objects.equals(getId(), task.getId()) && Objects.equals(getName(), task.getName()) && Objects.equals(getTask(), task.getTask()) && Objects.equals(getStatus(), task.getStatus());
     }
 
     @Override

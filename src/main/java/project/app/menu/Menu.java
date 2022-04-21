@@ -1,7 +1,7 @@
 package project.app.menu;
 
-import project.app.dao.ListRepositoryCollectionImpl;
-import project.app.model.ListModel;
+import project.app.dao.TaskRepositoryCollectionImpl;
+import project.app.model.Task;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
-    ListRepositoryCollectionImpl listRepositoryCollection = new ListRepositoryCollectionImpl();
+    TaskRepositoryCollectionImpl listRepositoryCollection = new TaskRepositoryCollectionImpl();
 
     public int getUserChoice() {
         return scanner.nextInt();
@@ -45,26 +45,26 @@ public class Menu {
     }
 
 
-    public ListModel fillListData() {
-        ListModel listModel = new ListModel();
+    public Task fillListData() {
+        Task task = new Task();
         System.out.println("Enter task id:");
-        listModel.setId(scanner.nextInt());
+        task.setId(scanner.nextInt());
         scanner.nextLine();
         System.out.println("Enter the name of the task:");
-        listModel.setName(scanner.nextLine());
+        task.setName(scanner.nextLine());
         System.out.println("Press space bar to continue");
         scanner.nextLine();
         System.out.println("Enter a task:");
-        listModel.setTask(scanner.nextLine());
+        task.setTask(scanner.nextLine());
 
-        listRepositoryCollection.save(listModel);
-        return listModel;
+        listRepositoryCollection.save(task);
+        return task;
 
     }
 
     public void viveLists() {
-        List<ListModel> listModel = listRepositoryCollection.getAll();
-        for (ListModel list : listModel) {
+        List<Task> task = listRepositoryCollection.getAll();
+        for (Task list : task) {
             System.out.println(list);
         }
 

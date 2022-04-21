@@ -1,17 +1,17 @@
 package project.app.dao;
 
-import project.app.model.ListModel;
+import project.app.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ListRepositoryCollectionImpl implements ListRepository {
-    private final ArrayList<ListModel> myLists = new ArrayList<>();
+public class TaskRepositoryCollectionImpl implements TaskRepository {
+    private final ArrayList<Task> myLists = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void save(ListModel list) {
+    public void save(Task list) {
         myLists.add(list);
     }
 
@@ -19,7 +19,7 @@ public class ListRepositoryCollectionImpl implements ListRepository {
     public void deleteByID() {
         System.out.println("Enter the ID of the task you want to delete:");
         Integer gUC = scanner.nextInt();
-        for (ListModel list : myLists) {
+        for (Task list : myLists) {
             System.out.println(list);
         }
         myLists.removeIf(listModel -> gUC.equals(listModel.getId()));
@@ -31,7 +31,7 @@ public class ListRepositoryCollectionImpl implements ListRepository {
         getAll();
         System.out.println("Enter the name of the task:");
         Integer gUC1 =scanner.nextInt();
-        for (ListModel list : myLists) {
+        for (Task list : myLists) {
             if (gUC1.equals(list.getId())) {
                 System.out.println("Select the item you would like to edit:\n1.Change name\n2.Change the task");
                 int gUC = scanner.nextInt();
@@ -58,7 +58,7 @@ public class ListRepositoryCollectionImpl implements ListRepository {
         getAll();
         System.out.println("Choice a task to edit the status:");
         Integer gUC = scanner.nextInt();
-        for(ListModel list : myLists){
+        for(Task list : myLists){
             if(gUC.equals(list.getId())){
                 System.out.println("To mark a task as completed, press 1;\nTo mark a task as NOT completed, press 2;");
                 int gUc =scanner.nextInt();
@@ -79,7 +79,7 @@ public class ListRepositoryCollectionImpl implements ListRepository {
     }
 
     @Override
-    public List<ListModel> getAll() {
+    public List<Task> getAll() {
         return myLists;
     }
 
