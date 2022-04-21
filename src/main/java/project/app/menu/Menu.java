@@ -1,6 +1,6 @@
 package project.app.menu;
 
-import project.app.ListRepositoryCollectionImpl;
+import project.app.dao.ListRepositoryCollectionImpl;
 import project.app.model.ListModel;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class Menu {
     public void viewMenu() {
         boolean active = true;
         while (active) {
-            System.out.printf("\n1.Вывести список\n2.Добавить задачу \n3.Удалить задачу\n4.Выбрать задачу для редактирования\n5.Статус задачи\n6.Выход");
+            System.out.println("\n1.Вывести список\n2.Добавить задачу \n3.Удалить задачу\n4.Выбрать задачу для редактирования\n5.Статус задачи\n6.Выход");
             switch (getUserChoice()) {
                 case 1:
                     viveLists();

@@ -1,0 +1,5 @@
+project\app\aplication\App.class
+project\app\menu\Menu.class
+project\app\model\ListModel.class
+project\app\dao\ListRepositoryCollectionImpl.class
+project\app\dao\ListRepository.class

@@ -1,8 +1,8 @@
-package project.app.run;
+package project.app.aplication;
 
 import project.app.menu.*;
 
-public class Main {
+public class App {
 
     public static void main(String[] args) {
         Menu menu = new Menu();

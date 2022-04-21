@@ -1,4 +1,4 @@
-package project.app;
+package project.app.dao;
 
 import project.app.model.ListModel;
 
