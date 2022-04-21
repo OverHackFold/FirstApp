@@ -18,7 +18,7 @@ public class Menu {
     public void viewMenu() {
         boolean active = true;
         while (active) {
-            System.out.println("\n1.Вывести список\n2.Добавить задачу \n3.Удалить задачу\n4.Выбрать задачу для редактирования\n5.Статус задачи\n6.Выход");
+            System.out.println("\n1.View tasks\n2.Add task \n3.Delete task\n4.Choice task to edit\n5.Task status\n6.Exit");
             switch (getUserChoice()) {
                 case 1:
                     viveLists();
@@ -38,7 +38,7 @@ public class Menu {
                 case 6: active = false;
                     break;
                 default:
-                    System.out.println("Выберите другой вариант!");
+                    System.out.println("Choice another variant!");
             }
         }
 
@@ -47,14 +47,14 @@ public class Menu {
 
     public ListModel fillListData() {
         ListModel listModel = new ListModel();
-        System.out.println("Введите номер задачи:");
+        System.out.println("Enter task id:");
         listModel.setId(scanner.nextInt());
         scanner.nextLine();
-        System.out.println("Введите Наименование задачи:");
+        System.out.println("Enter the name of the task:");
         listModel.setName(scanner.nextLine());
-        System.out.println("Нажмите пробел для того чтоб продолжить");
+        System.out.println("Press space bar to continue");
         scanner.nextLine();
-        System.out.println("Введите задачу:");
+        System.out.println("Enter a task:");
         listModel.setTask(scanner.nextLine());
 
         listRepositoryCollection.save(listModel);
@@ -72,6 +72,7 @@ public class Menu {
     }
 
     public void deleteList() {
+        viveLists();
         listRepositoryCollection.deleteByID();
     }
 

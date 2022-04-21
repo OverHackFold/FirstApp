@@ -8,6 +8,7 @@ public interface ListRepository {
 
     void save(ListModel list);
 
+
     void deleteByID();
 
     void getByName();

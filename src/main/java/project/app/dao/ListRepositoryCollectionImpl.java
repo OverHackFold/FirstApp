@@ -17,37 +17,37 @@ public class ListRepositoryCollectionImpl implements ListRepository {
 
     @Override
     public void deleteByID() {
-        int gUC = scanner.nextInt();
-        System.out.println("Введите ID задачи:");
+        System.out.println("Enter the ID of the task you want to delete:");
+        Integer gUC = scanner.nextInt();
         for (ListModel list : myLists) {
             System.out.println(list);
         }
-        myLists.removeIf(listModel -> gUC == (listModel.getId()));
-        System.out.println("Задача успешно удалена");
+        myLists.removeIf(listModel -> gUC.equals(listModel.getId()));
+        System.out.println("Task deleted successfully");
     }
 
     @Override
     public void getByName() {
         getAll();
-        System.out.println("Введиет название задачи:");
-        int gUC1 =scanner.nextInt();
+        System.out.println("Enter the name of the task:");
+        Integer gUC1 =scanner.nextInt();
         for (ListModel list : myLists) {
-            if (gUC1==(list.getId())) {
-                System.out.println("Выберите пункт который бы хотели отредактировать:\n1.Изменить название\n2.Изменить задачу");
+            if (gUC1.equals(list.getId())) {
+                System.out.println("Select the item you would like to edit:\n1.Change name\n2.Change the task");
                 int gUC = scanner.nextInt();
                 switch (gUC) {
                     case 1:
-                        System.out.println("Введите новое название:");
+                        System.out.println("Enter a new name:");
                         list.setName(scanner.next());
-                        System.out.println("Название успешно изменено на: "+list.getName());
+                        System.out.println("Name successfully changed to: "+list.getName());
                         break;
                     case 2:
-                        System.out.println("Введите новую задачу:");
+                        System.out.println("Enter a new task:");
                         list.setTask(scanner.next());
-                        System.out.println("Задача усппешно отредактирована!");
+                        System.out.println("Task was successfully edited!");
                         break;
                     default:
-                        System.out.println("Ошибка ввода , повторите попытку!");
+                        System.out.println("Input error, please try again!");
                 }
             }
         }
@@ -56,11 +56,11 @@ public class ListRepositoryCollectionImpl implements ListRepository {
     @Override
     public void listSE() {
         getAll();
-        System.out.println("Выберите задачу чтобы отредактировать статус:");
-        int gUC = scanner.nextInt();
+        System.out.println("Choice a task to edit the status:");
+        Integer gUC = scanner.nextInt();
         for(ListModel list : myLists){
-            if(gUC==(list.getId())){
-                System.out.println("Чтобы пометить задачу как выполненую ,нажмите 1;\nЧтобы пометить задачу как НЕвыполненную нажмите 2;");
+            if(gUC.equals(list.getId())){
+                System.out.println("To mark a task as completed, press 1;\nTo mark a task as NOT completed, press 2;");
                 int gUc =scanner.nextInt();
                 switch (gUc){
                     case 1:
@@ -70,7 +70,7 @@ public class ListRepositoryCollectionImpl implements ListRepository {
                         list.setStatus("✘");
                         break;
                     default:
-                        System.out.println("Выберите другой вариант!");
+                        System.out.println("Choose another option!");
                 }
 
 
@@ -80,7 +80,6 @@ public class ListRepositoryCollectionImpl implements ListRepository {
 
     @Override
     public List<ListModel> getAll() {
-
         return myLists;
     }
 
