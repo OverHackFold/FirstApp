@@ -8,9 +8,9 @@ import java.util.List;
 
 public class ListRepositoryJDBCImpl implements ListRepository {
     //  Database credentials
-    static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/vertex";
-    static final String USER = "username";
-    static final String PASS = "password";
+   private static final String DB_URL = "jdbc:postgresql://localhost:5433/ListRepository";
+    private static final String USER = "postgres";
+    private  static final String PASS = "123";
 
     public static void main(String[] argv) {
 
