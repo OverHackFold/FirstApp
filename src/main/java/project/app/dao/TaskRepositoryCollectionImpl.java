@@ -11,7 +11,9 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
     Scanner scanner = new Scanner(System.in);
 
     @Override
+    // todo Task task или Task entity, чтобы сделать потом T entity
     public void save(Task list) {
+        // todo добавь sout в конце метода. что операция прошла успешно.
         myLists.add(list);
     }
 
@@ -19,6 +21,9 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
     public void deleteByID() {
         System.out.println("Enter the ID of the task you want to delete:");
         Integer gUC = scanner.nextInt();
+        //todo Task task: tasks, если ты его переделаешь потом в generic,
+        // то T entity: entities
+        // А зачем здесь вывод всех сущностей?
         for (Task list : myLists) {
             System.out.println(list);
         }
@@ -27,7 +32,10 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
     }
 
     @Override
+    // todo getByName если бы ты возвращал таск по имени, а так modify, change или edit.
+    //
     public void getByName() {
+        // todo Зачем getAll()? Он сейчас не делает ничего.
         getAll();
         System.out.println("Enter the name of the task:");
         Integer gUC1 =scanner.nextInt();
@@ -54,7 +62,9 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
     }
 
     @Override
+    // todo editStatus
     public void listSE() {
+        // todo Зачем getAll()? Он сейчас не делает ничего.
         getAll();
         System.out.println("Choice a task to edit the status:");
         Integer gUC = scanner.nextInt();

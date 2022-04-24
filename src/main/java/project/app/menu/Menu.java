@@ -44,7 +44,8 @@ public class Menu {
 
     }
 
-
+    // todo fill, если ты заполняешь таск, вроде fillTask(Task task)
+    //  А у тебя createTask()
     public Task fillListData() {
         Task task = new Task();
         System.out.println("Enter task id:");
@@ -62,26 +63,33 @@ public class Menu {
 
     }
 
+    // todo Может все таки view? В идеале show. И ты показываешь один list!?
+    //  Значит showList. Но это если он обобщенный. Если ты показываешь таски,
+    //  то showTasks()
     public void viveLists() {
         List<Task> task = listRepositoryCollection.getAll();
         for (Task list : task) {
             System.out.println(list);
         }
-
-
     }
 
     public void deleteList() {
+        // todo Зачем?
         viveLists();
         listRepositoryCollection.deleteByID();
     }
 
+    // todo опять же chooseTask
     public void chooseList() {
+        // todo Зачем?
         viveLists();
         listRepositoryCollection.getByName();
 
     }
+
+    // todo editStatus()
     public void listStatus(){
+        // todo Зачем?
         viveLists();
         listRepositoryCollection.listSE();
     }

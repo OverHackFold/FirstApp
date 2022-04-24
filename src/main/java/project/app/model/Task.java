@@ -2,6 +2,7 @@ package project.app.model;
 
 import java.util.Objects;
 
+// todo Нет второй сущности TodoList
 public class Task {
 
     private Integer id;
