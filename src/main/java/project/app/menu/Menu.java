@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
-    TaskRepositoryCollectionImpl listRepositoryCollection = new TaskRepositoryCollectionImpl();
+    TaskRepositoryCollectionImpl taskRepositoryCollectionimpl = new TaskRepositoryCollectionImpl();
 
     public int getUserChoice() {
         return scanner.nextInt();
@@ -57,13 +57,13 @@ public class Menu {
         System.out.println("Enter a task:");
         task.setTask(scanner.nextLine());
 
-        listRepositoryCollection.save(task);
+        taskRepositoryCollectionimpl.save(task);
         return task;
 
     }
 
     public void viveLists() {
-        List<Task> task = listRepositoryCollection.getAll();
+        List<Task> task = taskRepositoryCollectionimpl.getAll();
         for (Task list : task) {
             System.out.println(list);
         }
@@ -73,17 +73,17 @@ public class Menu {
 
     public void deleteList() {
         viveLists();
-        listRepositoryCollection.deleteByID();
+        taskRepositoryCollectionimpl.deleteByID();
     }
 
     public void chooseList() {
         viveLists();
-        listRepositoryCollection.getByName();
+        taskRepositoryCollectionimpl.getByName();
 
     }
     public void listStatus(){
         viveLists();
-        listRepositoryCollection.listSE();
+        taskRepositoryCollectionimpl.listSE();
     }
 
 
