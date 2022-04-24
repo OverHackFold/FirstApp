@@ -3,8 +3,7 @@ package project.app.model;
 import java.util.Objects;
 
 public class Task {
-
-    private Integer id;
+    private Integer id ;
     private String name;
     private String task;
     private String status;

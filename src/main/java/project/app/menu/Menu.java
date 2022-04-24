@@ -24,7 +24,7 @@ public class Menu {
                     viveLists();
                     break;
                 case 2:
-                    fillListData();
+                    fillTaskData();
                     break;
                 case 3:
                     deleteList();
@@ -45,9 +45,9 @@ public class Menu {
     }
 
 
-    public Task fillListData() {
+    public Task fillTaskData() {
         Task task = new Task();
-        System.out.println("Enter task id:");
+        System.out.println("Enter the task ID:");
         task.setId(scanner.nextInt());
         scanner.nextLine();
         System.out.println("Enter the name of the task:");
@@ -64,8 +64,8 @@ public class Menu {
 
     public void viveLists() {
         List<Task> task = taskRepositoryCollectionimpl.getAll();
-        for (Task list : task) {
-            System.out.println(list);
+        for (Task tasks : task) {
+            System.out.println(tasks);
         }
 
 
@@ -78,12 +78,13 @@ public class Menu {
 
     public void chooseList() {
         viveLists();
-        taskRepositoryCollectionimpl.getByName();
+        taskRepositoryCollectionimpl.editTask();
 
     }
     public void listStatus(){
         viveLists();
-        taskRepositoryCollectionimpl.listSE();
+        taskRepositoryCollectionimpl.editStatus();
+
     }
 
 

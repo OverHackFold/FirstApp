@@ -7,43 +7,44 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TaskRepositoryCollectionImpl implements TaskRepository {
-    private final ArrayList<Task> myLists = new ArrayList<>();
+    private final ArrayList<Task> myTask = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void save(Task list) {
-        myLists.add(list);
+    public void save(Task task) {
+        myTask.add(task);
+        System.out.println("Task  was successfully added!");
     }
 
     @Override
     public void deleteByID() {
         System.out.println("Enter the ID of the task you want to delete:");
         Integer gUC = scanner.nextInt();
-        for (Task list : myLists) {
-            System.out.println(list);
+        for (Task task : myTask) {
+            System.out.println(task);
         }
-        myLists.removeIf(listModel -> gUC.equals(listModel.getId()));
-        System.out.println("Task deleted successfully");
+        myTask.removeIf(taskModel -> gUC.equals(taskModel.getId()));
+        System.out.println("Task deleted successfully!");
     }
 
     @Override
-    public void getByName() {
+    public void editTask() {
         getAll();
-        System.out.println("Enter the name of the task:");
-        Integer gUC1 =scanner.nextInt();
-        for (Task list : myLists) {
-            if (gUC1.equals(list.getId())) {
+        System.out.println("Enter the id of the task:");
+        Integer gUC1 = scanner.nextInt();
+        for (Task task : myTask) {
+            if (gUC1.equals(task.getId())) {
                 System.out.println("Select the item you would like to edit:\n1.Change name\n2.Change the task");
                 int gUC = scanner.nextInt();
                 switch (gUC) {
                     case 1:
                         System.out.println("Enter a new name:");
-                        list.setName(scanner.next());
-                        System.out.println("Name successfully changed to: "+list.getName());
+                        task.setName(scanner.next());
+                        System.out.println("Name successfully changed to: " + task.getName());
                         break;
                     case 2:
                         System.out.println("Enter a new task:");
-                        list.setTask(scanner.next());
+                        task.setTask(scanner.nextLine());
                         System.out.println("Task was successfully edited!");
                         break;
                     default:
@@ -54,20 +55,20 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
     }
 
     @Override
-    public void listSE() {
+    public void editStatus() {
         getAll();
         System.out.println("Choice a task to edit the status:");
         Integer gUC = scanner.nextInt();
-        for(Task list : myLists){
-            if(gUC.equals(list.getId())){
+        for (Task task : myTask) {
+            if (gUC.equals(task.getId())) {
                 System.out.println("To mark a task as completed, press 1;\nTo mark a task as NOT completed, press 2;");
-                int gUc =scanner.nextInt();
-                switch (gUc){
+                int gUc = scanner.nextInt();
+                switch (gUc) {
                     case 1:
-                        list.setStatus("✔");
+                        task.setStatus("✔");
                         break;
                     case 2:
-                        list.setStatus("✘");
+                        task.setStatus("✘");
                         break;
                     default:
                         System.out.println("Choose another option!");
@@ -80,7 +81,7 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
 
     @Override
     public List<Task> getAll() {
-        return myLists;
+        return myTask;
     }
 
 

@@ -8,7 +8,7 @@ public interface TaskRepository {
 
     void save(Task list);
     void deleteByID();
-    void getByName();
-    void listSE();
+    void editTask();
+    void editStatus();
     List<Task> getAll();
 }

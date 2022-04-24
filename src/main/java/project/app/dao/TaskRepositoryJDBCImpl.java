@@ -23,7 +23,7 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     }
 
     @Override
-    public void save(Task list) {
+    public void save(Task task) {
         try(Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement statement = connection.createStatement()) {
           
@@ -42,12 +42,12 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     }
 
     @Override
-    public void getByName() {
+    public void editTask() {
 
     }
 
     @Override
-    public void listSE() {
+    public void editStatus() {
 
     }
 
