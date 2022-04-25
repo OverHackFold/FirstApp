@@ -21,19 +21,19 @@ public class Menu {
             System.out.println("\n1.View tasks\n2.Add task \n3.Delete task\n4.Choice task to edit\n5.Task status\n6.Exit");
             switch (getUserChoice()) {
                 case 1:
-                    viveLists();
+                    showTasks();
                     break;
                 case 2:
                     fillTaskData();
                     break;
                 case 3:
-                    deleteList();
+                    deleteTask();
                     break;
                 case 4:
-                    chooseList();
+                    chooseTask();
                     break;
                 case 5:
-                    listStatus();
+                    taskStatus();
                     break;
                 case 6: active = false;
                     break;
@@ -62,7 +62,7 @@ public class Menu {
 
     }
 
-    public void viveLists() {
+    public void showTasks() {
         List<Task> task = taskRepositoryCollectionimpl.getAll();
         for (Task tasks : task) {
             System.out.println(tasks);
@@ -71,18 +71,18 @@ public class Menu {
 
     }
 
-    public void deleteList() {
-        viveLists();
+    public void deleteTask() {
+        showTasks();
         taskRepositoryCollectionimpl.deleteByID();
     }
 
-    public void chooseList() {
-        viveLists();
+    public void chooseTask() {
+showTasks();
         taskRepositoryCollectionimpl.editTask();
 
     }
-    public void listStatus(){
-        viveLists();
+    public void taskStatus(){
+        showTasks();
         taskRepositoryCollectionimpl.editStatus();
 
     }

@@ -29,7 +29,7 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
 
     @Override
     public void editTask() {
-        getAll();
+
         System.out.println("Enter the id of the task:");
         Integer gUC1 = scanner.nextInt();
         for (Task task : myTask) {
@@ -56,7 +56,7 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
 
     @Override
     public void editStatus() {
-        getAll();
+
         System.out.println("Choice a task to edit the status:");
         Integer gUC = scanner.nextInt();
         for (Task task : myTask) {
@@ -81,6 +81,7 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
 
     @Override
     public List<Task> getAll() {
+
         return myTask;
     }
 

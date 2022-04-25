@@ -2,10 +2,7 @@ package project.app.dao;
 
 import project.app.model.Task;
 
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 public class TaskRepositoryJDBCImpl implements TaskRepository {
@@ -24,9 +21,33 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
 
     @Override
     public void save(Task task) {
+        String SQL = "INSERT INTO Task (name,task,status) "
+                + "VALUES(?,?,?)";
         try(Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = connection.createStatement()) {
-          
+            PreparedStatement pstmt = connection.prepareStatement(SQL,
+                    Statement.RETURN_GENERATED_KEYS);) {
+
+
+            long id =0;
+
+            pstmt.setString(1, task.getName());
+            pstmt.setString(2, task.getTask());
+            pstmt.setString(3,task.getStatus());
+            pstmt.executeUpdate();
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        id = rs.getLong(1);
+                    }
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+
 
 
         } catch (SQLException e) {
