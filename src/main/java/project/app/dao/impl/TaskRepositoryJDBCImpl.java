@@ -1,14 +1,16 @@
-package project.app.dao;
+package project.app.dao.impl;
 
+import project.app.dao.TaskRepository;
 import project.app.model.Task;
 
 import java.sql.*;
 import java.util.List;
 
 public class TaskRepositoryJDBCImpl implements TaskRepository {
-   private static final String DB_URL = "jdbc:postgresql://localhost:5433/ListRepository";
+
+    private static final String DB_URL = "jdbc:postgresql://localhost:5433/ListRepository";
     private static final String USER = "postgres";
-    private  static final String PASS = "123";
+    private static final String PASS = "123";
 
     {
         try {
@@ -23,31 +25,17 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     public void save(Task task) {
         String SQL = "INSERT INTO Task (name,task,status) "
                 + "VALUES(?,?,?)";
-        try(Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            PreparedStatement pstmt = connection.prepareStatement(SQL,
-                    Statement.RETURN_GENERATED_KEYS);) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement prepareStatement = connection.prepareStatement(SQL,
+                     Statement.RETURN_GENERATED_KEYS);) {
 
 
-            long id =0;
+            long id = 0;
 
-            pstmt.setString(1, task.getName());
-            pstmt.setString(2, task.getTask());
-            pstmt.setString(3,task.getStatus());
-            pstmt.executeUpdate();
-
-            int affectedRows = pstmt.executeUpdate();
-
-            if (affectedRows > 0) {
-
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        id = rs.getLong(1);
-                    }
-                } catch (SQLException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-
+            prepareStatement.setString(1, task.getName());
+            prepareStatement.setString(2, task.getTask());
+            prepareStatement.setString(3, task.getStatus());
+            prepareStatement.executeUpdate();
 
 
         } catch (SQLException e) {

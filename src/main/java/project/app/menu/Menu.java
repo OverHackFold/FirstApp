@@ -1,6 +1,7 @@
 package project.app.menu;
 
-import project.app.dao.TaskRepositoryCollectionImpl;
+import project.app.dao.TaskRepository;
+import project.app.dao.impl.TaskRepositoryCollectionImpl;
 import project.app.model.Task;
 
 import java.util.List;
@@ -8,8 +9,14 @@ import java.util.Scanner;
 
 
 public class Menu {
+
+
+    private final TaskRepository taskRepository;
+    public Menu(TaskRepositoryCollectionImpl taskRepository) {
+        this.taskRepository = taskRepository;
+    }
     Scanner scanner = new Scanner(System.in);
-    TaskRepositoryCollectionImpl taskRepositoryCollectionimpl = new TaskRepositoryCollectionImpl();
+
 
     public int getUserChoice() {
         return scanner.nextInt();
@@ -35,7 +42,8 @@ public class Menu {
                 case 5:
                     taskStatus();
                     break;
-                case 6: active = false;
+                case 6:
+                    active = false;
                     break;
                 default:
                     System.out.println("Choice another variant!");
@@ -57,13 +65,13 @@ public class Menu {
         System.out.println("Enter a task:");
         task.setTask(scanner.nextLine());
 
-        taskRepositoryCollectionimpl.save(task);
+        taskRepository.save(task);
         return task;
 
     }
 
     public void showTasks() {
-        List<Task> task = taskRepositoryCollectionimpl.getAll();
+        List<Task> task = taskRepository.getAll();
         for (Task tasks : task) {
             System.out.println(tasks);
         }
@@ -73,17 +81,18 @@ public class Menu {
 
     public void deleteTask() {
         showTasks();
-        taskRepositoryCollectionimpl.deleteByID();
+        taskRepository.deleteByID();
     }
 
     public void chooseTask() {
-showTasks();
-        taskRepositoryCollectionimpl.editTask();
+        showTasks();
+        taskRepository.editTask();
 
     }
-    public void taskStatus(){
+
+    public void taskStatus() {
         showTasks();
-        taskRepositoryCollectionimpl.editStatus();
+        taskRepository.editStatus();
 
     }
 

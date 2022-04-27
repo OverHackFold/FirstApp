@@ -3,16 +3,16 @@ package project.app.model;
 import java.util.Objects;
 
 public class Task {
-    private Integer id ;
+    private Integer id;
     private String name;
     private String task;
     private String status;
 
 
-
     public Task() {
 
     }
+
     public String getStatus() {
         return status;
     }
@@ -20,6 +20,7 @@ public class Task {
     public void setStatus(String status) {
         this.status = status;
     }
+
     public int getId() {
         return id;
     }

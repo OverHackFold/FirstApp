@@ -1,5 +1,6 @@
-package project.app.dao;
+package project.app.dao.impl;
 
+import project.app.dao.TaskRepository;
 import project.app.model.Task;
 
 import java.util.ArrayList;
