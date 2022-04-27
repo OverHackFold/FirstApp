@@ -1,57 +1,98 @@
 package project.app.dao.impl;
 
 import project.app.dao.TaskRepository;
+import project.app.dao.converter.Converter;
 import project.app.model.Task;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class TaskRepositoryJDBCImpl implements TaskRepository {
 
-    private static final String DB_URL = "jdbc:postgresql://localhost:5433/ListRepository";
+    private static final String DB_DRIVER = "org.postgresql.Driver";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5433/taskdb";
     private static final String USER = "postgres";
     private static final String PASS = "123";
 
-    {
+    private Scanner scanner = new Scanner(System.in);
+
+    public static Connection initDatabase() {
         try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("PostgreSQL JDBC Driver is not found. Include it in your library path ");
+            Class.forName(DB_DRIVER);
+            return DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
     public void save(Task task) {
-        String SQL = "INSERT INTO Task (name,task,status) "
-                + "VALUES(?,?,?)";
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-             PreparedStatement prepareStatement = connection.prepareStatement(SQL,
-                     Statement.RETURN_GENERATED_KEYS);) {
-
-
-            long id = 0;
-
-            prepareStatement.setString(1, task.getName());
-            prepareStatement.setString(2, task.getTask());
-            prepareStatement.setString(3, task.getStatus());
-            prepareStatement.executeUpdate();
-
-
-        } catch (SQLException e) {
-            System.out.println("Connection Failed");
+        String insertTaskToDBSQL = "INSERT INTO TASKS (name,task,status) VALUES(?,?,?)";
+        try (Connection connection = initDatabase()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertTaskToDBSQL);
+            preparedStatement.setString(1, task.getName());
+            preparedStatement.setString(2, task.getTask());
+            preparedStatement.setString(3, task.getStatus());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
-    public void deleteByID() {
-
+    public void deleteByID(Integer deletedId) {
+        String deleteTaskFromDBSQL = "DELETE FROM TASKS WHERE id = ?";
+        String checkIfTasksDeleted = "SELECT * FROM TASKS WHERE id = ?";
+        try(Connection connection = initDatabase()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteTaskFromDBSQL);
+            preparedStatement.setInt(1, deletedId);
+            preparedStatement.executeUpdate();
+            PreparedStatement checkingPreparedStatement = connection.prepareStatement(checkIfTasksDeleted);
+            checkingPreparedStatement.setInt(1, deletedId);
+            ResultSet resultSet = checkingPreparedStatement.executeQuery();
+            if(!resultSet.next()) {
+                System.out.println("Task with id: "+deletedId+" , was successfully deleted.");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void editTask() {
+    public void editTask(Integer id) {
+        switch (getUserChoice()) {
+            case 1 -> editTaskName(id);
+            case 2 -> editTaskTask(id);
+            case 3 -> editTaskStatus(id);
+            default -> System.out.println("You choose wrong number");
+        }
+    }
+
+    public void editTaskName(Integer id) {
+        String updatingTaskNameSQL = "UPDATE TASKS SET name = ? where id = ?";
+        String updatedTaskName = scanner.next();
+        try (Connection connection = initDatabase()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(updatingTaskNameSQL);
+            preparedStatement.setString(1, updatedTaskName);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void editTaskTask(Integer id) {
+
+    }
+
+    public static void editTaskStatus(Integer id) {
 
     }
 
@@ -62,6 +103,21 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
 
     @Override
     public List<Task> getAll() {
-        return null;
+        List<Task> tasksList = new ArrayList<>();
+        String getAllTasksFromDBSQL = "SELECT * FROM TASKS";
+        try (Connection connection = initDatabase()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(getAllTasksFromDBSQL);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                tasksList.add(Converter.toTaskFromResultSet(resultSet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tasksList;
+    }
+
+    public int getUserChoice() {
+        return scanner.nextInt();
     }
 }

@@ -18,18 +18,18 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
     }
 
     @Override
-    public void deleteByID() {
+    public void deleteByID(Integer deletedId) {
         System.out.println("Enter the ID of the task you want to delete:");
         Integer gUC = scanner.nextInt();
-        for (Task task : myTask) {
-            System.out.println(task);
+        for (Task tasks : myTask) {
+            System.out.println(tasks);
         }
         myTask.removeIf(taskModel -> gUC.equals(taskModel.getId()));
         System.out.println("Task deleted successfully!");
     }
 
     @Override
-    public void editTask() {
+    public void editTask(Integer id) {
 
         System.out.println("Enter the id of the task:");
         Integer gUC1 = scanner.nextInt();
@@ -66,10 +66,10 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
                 int gUc = scanner.nextInt();
                 switch (gUc) {
                     case 1:
-                        task.setStatus("✔");
+                        task.setStatus("Finished");
                         break;
                     case 2:
-                        task.setStatus("✘");
+                        task.setStatus("Unfinished");
                         break;
                     default:
                         System.out.println("Choose another option!");

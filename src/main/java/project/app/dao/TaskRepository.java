@@ -1,16 +1,15 @@
 package project.app.dao;
 
 import project.app.model.Task;
-
 import java.util.List;
 
 public interface TaskRepository {
 
-    void save(Task list);
+    void save(Task task);
 
-    void deleteByID();
+    void deleteByID(Integer deletedId);
 
-    void editTask();
+    void editTask(Integer id);
 
     void editStatus();
 

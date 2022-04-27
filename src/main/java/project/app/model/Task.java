@@ -3,29 +3,19 @@ package project.app.model;
 import java.util.Objects;
 
 public class Task {
+
     private Integer id;
     private String name;
     private String task;
     private String status;
 
+    public Task() {}
 
-    public Task() {
-
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -45,9 +35,17 @@ public class Task {
         this.task = task;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "ListModel{" +
+        return "Task {" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", task='" + task + '\'' +
@@ -59,8 +57,8 @@ public class Task {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Task)) return false;
-        Task task = (Task) o;
-        return Objects.equals(getId(), task.getId()) && Objects.equals(getName(), task.getName()) && Objects.equals(getTask(), task.getTask()) && Objects.equals(getStatus(), task.getStatus());
+        Task task1 = (Task) o;
+        return getId().equals(task1.getId()) && Objects.equals(getName(), task1.getName()) && Objects.equals(getTask(), task1.getTask()) && Objects.equals(getStatus(), task1.getStatus());
     }
 
     @Override
