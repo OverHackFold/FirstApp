@@ -35,7 +35,7 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
         Integer gUC1 = scanner.nextInt();
         for (Task task : myTask) {
             if (gUC1.equals(task.getId())) {
-                System.out.println("Select the item you would like to edit:\n1.Change name\n2.Change the task");
+                System.out.println("Select the item you would like to edit:\n1.Edit name\n2.Edit the task\n3.Edit task status");
                 int gUC = scanner.nextInt();
                 switch (gUC) {
                     case 1:
@@ -48,6 +48,19 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
                         task.setTask(scanner.nextLine());
                         System.out.println("Task was successfully edited!");
                         break;
+                    case 3:
+                        System.out.println("To mark a task as completed, press 1;\nTo mark a task as NOT completed, press 2;");
+                        int gUc = scanner.nextInt();
+                        switch (gUc) {
+                            case 1:
+                                task.setStatus("Finished");
+                                break;
+                            case 2:
+                                task.setStatus("Unfinished");
+                                break;
+                            default:
+                                System.out.println("Choose another option!");
+                        }
                     default:
                         System.out.println("Input error, please try again!");
                 }
@@ -55,30 +68,7 @@ public class TaskRepositoryCollectionImpl implements TaskRepository {
         }
     }
 
-    @Override
-    public void editStatus() {
 
-        System.out.println("Choice a task to edit the status:");
-        Integer gUC = scanner.nextInt();
-        for (Task task : myTask) {
-            if (gUC.equals(task.getId())) {
-                System.out.println("To mark a task as completed, press 1;\nTo mark a task as NOT completed, press 2;");
-                int gUc = scanner.nextInt();
-                switch (gUc) {
-                    case 1:
-                        task.setStatus("Finished");
-                        break;
-                    case 2:
-                        task.setStatus("Unfinished");
-                        break;
-                    default:
-                        System.out.println("Choose another option!");
-                }
-
-
-            }
-        }
-    }
 
     @Override
     public List<Task> getAll() {

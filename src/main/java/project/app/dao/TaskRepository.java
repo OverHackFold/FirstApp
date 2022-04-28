@@ -11,7 +11,5 @@ public interface TaskRepository {
 
     void editTask(Integer id);
 
-    void editStatus();
-
     List<Task> getAll();
 }

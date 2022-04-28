@@ -17,13 +17,12 @@ public class Menu {
 
     public void viewMenu() {
         while (active) {
-            System.out.println("\n1.View tasks\n2.Add task \n3.Delete task\n4.Choose task to edit\n5.Task status\n6.Exit");
+            System.out.println("\n1.View tasks\n2.Add task \n3.Delete task\n4.Choose task to edit\n5.Exit");
             switch (getUserChoice()) {
                 case 1 -> showTasks();
                 case 2 -> fillTaskData();
                 case 3 -> deleteTask();
                 case 4 -> editTask();
-                case 5 -> editTaskStatus();
                 case 6 -> active = false;
                 default -> System.out.println("Choice another variant!");
             }
@@ -61,11 +60,6 @@ public class Menu {
         taskRepository.editTask(chosenTaskId);
     }
 
-    public void editTaskStatus() {
-        showTasks();
-        taskRepository.editStatus();
-
-    }
 
     public int getUserChoice() {
         return scanner.nextInt();

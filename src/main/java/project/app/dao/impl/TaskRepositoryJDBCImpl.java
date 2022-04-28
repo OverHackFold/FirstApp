@@ -19,7 +19,7 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     private static final String USER = "postgres";
     private static final String PASS = "123";
 
-    private Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
     public static Connection initDatabase() {
         try {
@@ -67,7 +67,9 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
 
     @Override
     public void editTask(Integer id) {
+        System.out.println("\n1.Edit task name\n2.Edit task \n3.Edit task status");
         switch (getUserChoice()) {
+
             case 1 -> editTaskName(id);
             case 2 -> editTaskTask(id);
             case 3 -> editTaskStatus(id);
@@ -76,7 +78,7 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     }
 
     public void editTaskName(Integer id) {
-        String updatingTaskNameSQL = "UPDATE TASKS SET name = ? where id = ?";
+        String updatingTaskNameSQL = "UPDATE TASKS SET name = ?   where id = ?";
         String updatedTaskName = scanner.next();
         try (Connection connection = initDatabase()) {
             PreparedStatement preparedStatement = connection.prepareStatement(updatingTaskNameSQL);
@@ -89,17 +91,33 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     }
 
     public static void editTaskTask(Integer id) {
+        String updateTaskTaskSQl = "UPDATE TASK SET task = ? where id = ?";
+        String updataTaskTask = scanner.next();
+        try(Connection connection = initDatabase()){
+            PreparedStatement preparedStatement = connection.prepareStatement(updateTaskTaskSQl);
+            preparedStatement.setString(1,updataTaskTask);
+            preparedStatement.setInt(2,id);
+            preparedStatement.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
     public static void editTaskStatus(Integer id) {
+        String updateTaskStatusSQL = "UPDATE TASK SET status = ? where id = ?";
+        String updateTaskStatus = scanner.next();
+        try(Connection connection = initDatabase()){
+            PreparedStatement preparedStatement = connection.prepareStatement(updateTaskStatusSQL);
+            preparedStatement.setString(1,updateTaskStatus);
+            preparedStatement.setInt(2,id);
+            preparedStatement.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
-    @Override
-    public void editStatus() {
-
-    }
 
     @Override
     public List<Task> getAll() {
