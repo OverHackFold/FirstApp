@@ -78,6 +78,7 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     }
 
     public void editTaskName(Integer id) {
+        System.out.println("Enter a new name:");
         String updatingTaskNameSQL = "UPDATE TASKS SET name = ?   where id = ?";
         String updatedTaskName = scanner.next();
         try (Connection connection = initDatabase()) {
@@ -91,11 +92,12 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     }
 
     public static void editTaskTask(Integer id) {
-        String updateTaskTaskSQl = "UPDATE TASK SET task = ? where id = ?";
-        String updataTaskTask = scanner.next();
+        System.out.println("Enter a new task:");
+        String updateTaskTaskSQl = "UPDATE TASKS SET task = ? where id = ?";
+        String updateTaskTask = scanner.next();
         try(Connection connection = initDatabase()){
             PreparedStatement preparedStatement = connection.prepareStatement(updateTaskTaskSQl);
-            preparedStatement.setString(1,updataTaskTask);
+            preparedStatement.setString(1,updateTaskTask);
             preparedStatement.setInt(2,id);
             preparedStatement.executeUpdate();
         }catch (Exception e){
@@ -105,7 +107,12 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     }
 
     public static void editTaskStatus(Integer id) {
-        String updateTaskStatusSQL = "UPDATE TASK SET status = ? where id = ?";
+        System.out.println("Enter task status:");
+        String updateTaskStatusSQL = "UPDATE TASKS" +
+                "" +
+                "" +
+                "" +
+                " SET status = ? where id = ?";
         String updateTaskStatus = scanner.next();
         try(Connection connection = initDatabase()){
             PreparedStatement preparedStatement = connection.prepareStatement(updateTaskStatusSQL);
