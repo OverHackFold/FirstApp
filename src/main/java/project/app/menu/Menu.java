@@ -1,98 +1,77 @@
 package project.app.menu;
 
-import project.app.dao.TaskRepositoryCollectionImpl;
+import project.app.dao.TaskRepository;
+import project.app.dao.impl.TaskRepositoryJDBCImpl;
 import project.app.model.Task;
 
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Menu {
-    Scanner scanner = new Scanner(System.in);
-    TaskRepositoryCollectionImpl listRepositoryCollection = new TaskRepositoryCollectionImpl();
+
+    private final TaskRepository taskRepository;
+
+    private final Scanner scanner = new Scanner(System.in);
+
+    private boolean active = true;
+
+    public void viewMenu() {
+        while (active) {
+            System.out.println("\n1.View tasks\n2.Add task \n3.Delete task\n4.Choose task to edit\n5.Exit");
+            // todo используешь более новую версию java? Используй 11, не старше
+            //  или по крайней мере не используй фичи более поздних версий.
+            //  Попробовал хорошо. Но часто твои возможности ограничены более ранними версиями.
+            //  Привыкай)). Хотя pattern matching здесь смотриться идеально.
+            switch (getUserChoice()) {
+                case 1 -> showTasks();
+                case 2 -> fillTaskData();
+                case 3 -> deleteTask();
+                case 4 -> editTask();
+                case 6 -> active = false;
+                default -> System.out.println("Choice another variant!");
+            }
+        }
+    }
+
+    public void fillTaskData() {
+        Task task = new Task();
+        System.out.println("Enter the name of the task:");
+        task.setName(scanner.next());
+        System.out.println("Enter a task:");
+        scanner.nextLine();
+        task.setTask(scanner.nextLine());
+        taskRepository.save(task);
+    }
+
+    public void showTasks() {
+        List<Task> tasksList = taskRepository.getAll();
+        for (Task tasks : tasksList) {
+            System.out.println(tasks);
+        }
+    }
+
+    public void deleteTask() {
+        showTasks();
+        System.out.println("Choose task which you want to delete (id): ");
+        Integer deletedId = scanner.nextInt();
+        taskRepository.deleteByID(deletedId);
+    }
+
+    public void editTask() {
+        showTasks();
+        System.out.println("Choose task which you want to edit (id): ");
+        Integer chosenTaskId = scanner.nextInt();
+        taskRepository.editTask(chosenTaskId);
+    }
+
 
     public int getUserChoice() {
         return scanner.nextInt();
     }
 
-    public void viewMenu() {
-        boolean active = true;
-        while (active) {
-            System.out.println("\n1.View tasks\n2.Add task \n3.Delete task\n4.Choice task to edit\n5.Task status\n6.Exit");
-            switch (getUserChoice()) {
-                case 1:
-                    viveLists();
-                    break;
-                case 2:
-                    fillListData();
-                    break;
-                case 3:
-                    deleteList();
-                    break;
-                case 4:
-                    chooseList();
-                    break;
-                case 5:
-                    listStatus();
-                    break;
-                case 6: active = false;
-                    break;
-                default:
-                    System.out.println("Choice another variant!");
-            }
-        }
-
+    //todo Делай зависимость от интерфейса, а не от реализации.
+    // тогда ты сможешь в одно на лету менять реализацию, не меняя класс Menu
+    public Menu(TaskRepositoryJDBCImpl taskRepository) {
+        this.taskRepository = taskRepository;
     }
-
-    // todo fill, если ты заполняешь таск, вроде fillTask(Task task)
-    //  А у тебя createTask()
-    public Task fillListData() {
-        Task task = new Task();
-        System.out.println("Enter task id:");
-        task.setId(scanner.nextInt());
-        scanner.nextLine();
-        System.out.println("Enter the name of the task:");
-        task.setName(scanner.nextLine());
-        System.out.println("Press space bar to continue");
-        scanner.nextLine();
-        System.out.println("Enter a task:");
-        task.setTask(scanner.nextLine());
-
-        listRepositoryCollection.save(task);
-        return task;
-
-    }
-
-    // todo Может все таки view? В идеале show. И ты показываешь один list!?
-    //  Значит showList. Но это если он обобщенный. Если ты показываешь таски,
-    //  то showTasks()
-    public void viveLists() {
-        List<Task> task = listRepositoryCollection.getAll();
-        for (Task list : task) {
-            System.out.println(list);
-        }
-    }
-
-    public void deleteList() {
-        // todo Зачем?
-        viveLists();
-        listRepositoryCollection.deleteByID();
-    }
-
-    // todo опять же chooseTask
-    public void chooseList() {
-        // todo Зачем?
-        viveLists();
-        listRepositoryCollection.getByName();
-
-    }
-
-    // todo editStatus()
-    public void listStatus(){
-        // todo Зачем?
-        viveLists();
-        listRepositoryCollection.listSE();
-    }
-
-
 }
