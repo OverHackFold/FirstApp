@@ -4,10 +4,7 @@ import project.app.dao.TaskRepository;
 import project.app.dao.converter.Converter;
 import project.app.model.Task;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +54,7 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
                 System.out.println("Task with id: "+deletedId+" , was successfully deleted.");
             }
         }
-        catch (Exception e){
+        catch (SQLException e){
             e.printStackTrace();
         }
     }
@@ -72,7 +69,7 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
             preparedStatement.setString(3,task.getStatus());
             preparedStatement.setInt(4,task.getId());
             preparedStatement.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -92,7 +89,7 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
             while (resultSet.next()) {
                 tasksList.add(Converter.toTaskFromResultSet(resultSet));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return tasksList;
