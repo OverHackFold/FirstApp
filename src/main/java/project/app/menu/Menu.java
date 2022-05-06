@@ -23,7 +23,7 @@ public class Menu {
                 case 2 -> fillTaskData();
                 case 3 -> deleteTask();
                 case 4 -> editTask();
-                case 6 -> active = false;
+                case 5 -> active = false;
                 default -> System.out.println("Choice another variant!");
             }
         }
@@ -47,7 +47,6 @@ public class Menu {
     }
 
     public void deleteTask() {
-        showTasks();
         System.out.println("Choose task which you want to delete (id): ");
         Integer deletedId = scanner.nextInt();
         taskRepository.deleteByID(deletedId);
@@ -56,8 +55,18 @@ public class Menu {
     public void editTask() {
         showTasks();
         System.out.println("Choose task which you want to edit (id): ");
-        Integer chosenTaskId = scanner.nextInt();
-        taskRepository.editTask(chosenTaskId);
+        Integer id = scanner.nextInt();
+        Task task = new Task();
+        task.setId(id);
+        System.out.println("Enter new  name:");
+        task.setName(scanner.next());
+        scanner.nextLine();
+        System.out.println("Enter new task");
+        task.setTask(scanner.nextLine());
+        System.out.println("Enter new status");
+        task.setStatus(scanner.nextLine());
+
+        taskRepository.editTask(task);
     }
 
 

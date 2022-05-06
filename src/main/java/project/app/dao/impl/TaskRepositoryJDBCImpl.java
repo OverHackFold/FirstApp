@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class TaskRepositoryJDBCImpl implements TaskRepository {
 
@@ -18,8 +17,6 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     private static final String DB_URL = "jdbc:postgresql://localhost:5433/taskdb";
     private static final String USER = "postgres";
     private static final String PASS = "123";
-
-    private static Scanner scanner = new Scanner(System.in);
 
     public static Connection initDatabase() {
         try {
@@ -66,64 +63,23 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
     }
 
     @Override
-    public void editTask(Integer id) {
-        System.out.println("\n1.Edit task name\n2.Edit task \n3.Edit task status");
-        switch (getUserChoice()) {
-
-            case 1 -> editTaskName(id);
-            case 2 -> editTaskTask(id);
-            case 3 -> editTaskStatus(id);
-            default -> System.out.println("You choose wrong number");
-        }
-    }
-
-    public void editTaskName(Integer id) {
-        System.out.println("Enter a new name:");
-        String updatingTaskNameSQL = "UPDATE TASKS SET name = ?   where id = ?";
-        String updatedTaskName = scanner.next();
+    public void editTask(Task task) {
+        String updatingTask = "UPDATE TASKS SET name = ?,task =?,status =?  where id = ?";
         try (Connection connection = initDatabase()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(updatingTaskNameSQL);
-            preparedStatement.setString(1, updatedTaskName);
-            preparedStatement.setInt(2, id);
+            PreparedStatement preparedStatement = connection.prepareStatement(updatingTask);
+            preparedStatement.setString(1, task.getName());
+            preparedStatement.setString(2,task.getTask());
+            preparedStatement.setString(3,task.getStatus());
+            preparedStatement.setInt(4,task.getId());
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void editTaskTask(Integer id) {
-        System.out.println("Enter a new task:");
-        String updateTaskTaskSQl = "UPDATE TASKS SET task = ? where id = ?";
-        String updateTaskTask = scanner.next();
-        try(Connection connection = initDatabase()){
-            PreparedStatement preparedStatement = connection.prepareStatement(updateTaskTaskSQl);
-            preparedStatement.setString(1,updateTaskTask);
-            preparedStatement.setInt(2,id);
-            preparedStatement.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
     }
 
-    public static void editTaskStatus(Integer id) {
-        System.out.println("Enter task status:");
-        String updateTaskStatusSQL = "UPDATE TASKS" +
-                "" +
-                "" +
-                "" +
-                " SET status = ? where id = ?";
-        String updateTaskStatus = scanner.next();
-        try(Connection connection = initDatabase()){
-            PreparedStatement preparedStatement = connection.prepareStatement(updateTaskStatusSQL);
-            preparedStatement.setString(1,updateTaskStatus);
-            preparedStatement.setInt(2,id);
-            preparedStatement.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
-    }
+
 
 
     @Override
@@ -140,9 +96,5 @@ public class TaskRepositoryJDBCImpl implements TaskRepository {
             e.printStackTrace();
         }
         return tasksList;
-    }
-
-    public int getUserChoice() {
-        return scanner.nextInt();
     }
 }
